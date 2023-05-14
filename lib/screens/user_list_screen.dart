@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:swd_app/models/req_user.dart';
+import 'package:swd_app/screens/no_netowrk.dart';
+import 'package:swd_app/widgets/user_details.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({super.key});
@@ -40,7 +42,7 @@ class _UserListScreenState extends State<UserListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('SWD-App'),
+          title: const Text('Users'),
         ),
         body: Column(
           children: [
@@ -48,25 +50,35 @@ class _UserListScreenState extends State<UserListScreen> {
               child: FutureBuilder(
                   future: fetchData(),
                   builder: (context, AsyncSnapshot<List<ReqUser>> snapshot) {
-                    return ListView.separated(
-                        separatorBuilder: (context, index) {
-                          return const Divider(
-                            thickness: 2,
-                          );
-                        },
-                        itemCount: reqUsers.length,
-                        itemBuilder: ((context, index) {
-                          return ListTile(
-                            visualDensity: const VisualDensity(vertical: 4),
-                            leading: CircleAvatar(
-                              maxRadius: 25,
-                              backgroundImage:
-                                  NetworkImage(snapshot.data![index].avatar),
-                            ),
-                            title: Text(
-                                snapshot.data![index].first_name.toString()),
-                          );
-                        }));
+                    return (snapshot.data == null)
+                        ? const NoNetwork()
+                        : ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return const Divider(
+                                thickness: 2,
+                              );
+                            },
+                            itemCount: reqUsers.length,
+                            itemBuilder: ((context, index) {
+                              return ListTile(
+                                onTap: () {
+                                  showBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return UserDetails(
+                                            user: snapshot.data![index]);
+                                      });
+                                },
+                                visualDensity: const VisualDensity(vertical: 4),
+                                leading: CircleAvatar(
+                                  maxRadius: 25,
+                                  backgroundImage: NetworkImage(
+                                      snapshot.data![index].avatar),
+                                ),
+                                title: Text(snapshot.data![index].first_name
+                                    .toString()),
+                              );
+                            }));
                   }),
             )
           ],

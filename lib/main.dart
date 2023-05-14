@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:swd_app/screens/login_screen.dart';
+import 'package:swd_app/screens/user_list_screen.dart';
+import 'package:swd_app/widgets/user_details.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -61,7 +63,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
       ),
-      home: const LoginPage(),
+      home: const UserListScreen(),
     );
   }
 }
