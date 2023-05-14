@@ -5,8 +5,11 @@ class NoNetwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Hello Darkness my old Friend'),
+    return Center(
+      child: Text(
+        'Hello Darkness my old Friend :(',
+        style: Theme.of(context).textTheme.headlineSmall,
+      ),
     );
   }
 }

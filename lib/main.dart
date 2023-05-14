@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swd_app/screens/login_screen.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
-import 'package:swd_app/widgets/user_details.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -55,13 +54,7 @@ class MyApp extends StatelessWidget {
             backgroundColor: kColorScheme.primaryContainer,
           ),
         ),
-        textTheme: ThemeData().textTheme.copyWith(
-              titleLarge: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: kColorScheme.onSecondaryContainer,
-                fontSize: 16,
-              ),
-            ),
+        textTheme: GoogleFonts.latoTextTheme(),
       ),
       home: const UserListScreen(),
     );

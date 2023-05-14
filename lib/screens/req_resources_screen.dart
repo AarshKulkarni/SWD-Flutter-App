@@ -16,10 +16,14 @@ class ResourcesListScreen extends StatefulWidget {
 class _ResourcesListScreenState extends State<ResourcesListScreen> {
   List<ReqResource> reqRes = [];
   Future<List<ReqResource>> fetchRes() async {
-    final response = await http.get(Uri.parse('https://reqres.in/api/unknown'));
+    final response =
+        await http.get(Uri.parse('https://reqres.in/api/unknown?page=1'));
+    final response2 =
+        await http.get(Uri.parse('https://reqres.in/api/unknown?page=2'));
     var fetchedRes = json.decode(response.body);
-    if (response.statusCode == 200) {
-      var data = fetchedRes['data'];
+    var fetchedRes2 = json.decode(response2.body);
+    if (response.statusCode == 200 && response2.statusCode == 200) {
+      var data = [...fetchedRes['data'], ...fetchedRes2['data']];
       for (Map i in data) {
         ReqResource res = ReqResource(
             id: i['id'],

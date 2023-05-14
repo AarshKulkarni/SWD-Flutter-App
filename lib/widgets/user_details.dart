@@ -7,8 +7,8 @@ class UserDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: MediaQuery.of(context).size.height / 2,
+    return SizedBox(
+      height: MediaQuery.of(context).size.height / 4,
       child: Stack(
         children: [
           Container(
@@ -29,9 +29,9 @@ class UserDetails extends StatelessWidget {
                   "${user.first_name} ${user.last_name}",
                   textAlign: TextAlign.end,
                   style: const TextStyle(
-                    fontSize: 24.0,
-                    fontWeight: FontWeight.w400,
-                  ),
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black87),
                 ),
                 const SizedBox(
                   height: 10.0,
@@ -40,9 +40,9 @@ class UserDetails extends StatelessWidget {
                   user.email,
                   textAlign: TextAlign.right,
                   style: const TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.normal,
-                  ),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.normal,
+                      color: Colors.black87),
                 ),
               ],
             ),
