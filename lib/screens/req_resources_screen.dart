@@ -35,39 +35,49 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
       }
       return reqRes;
     } else {
-      return [];
+      return reqRes;
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Resources'),
-      ),
-      body: Column(children: [
-        Expanded(
-            child: FutureBuilder(
-          future: fetchRes(),
-          builder: (context, AsyncSnapshot<List<ReqResource>> snapshot) {
-            return (snapshot.data == null)
-                ? const NoNetwork()
-                : ListView.separated(
-                    separatorBuilder: (context, index) {
-                      return const Divider(
-                        thickness: 2,
-                      );
-                    },
-                    itemCount: reqRes.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                          //...
-                          );
-                    },
-                  );
-          },
-        ))
-      ]),
-    );
+        appBar: AppBar(
+          title: const Text('Users'),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                builder: (context, AsyncSnapshot<List<ReqResource>> snapshot) {
+                  return (snapshot.data == null)
+                      ? const NoNetwork()
+                      : ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 2,
+                            );
+                          },
+                          itemCount: reqRes.length,
+                          itemBuilder: ((context, index) {
+                            return ListTile(
+                              visualDensity: const VisualDensity(vertical: 4),
+                              leading: CircleAvatar(
+                                maxRadius: 25,
+                                backgroundColor: Color(
+                                    '0x${snapshot.data![index].color.substring(1)}'
+                                        as int),
+                              ),
+                              title:
+                                  Text(snapshot.data![index].name.toString()),
+                              subtitle: Text('${snapshot.data![index].year}'),
+                            );
+                          }));
+                },
+                future: fetchRes(),
+              ),
+            ),
+          ],
+        ));
   }
 }
