@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swd_app/screens/about_me.dart';
+import 'package:swd_app/screens/req_resources_screen.dart';
+import 'package:swd_app/screens/user_list_screen.dart';
 
 class MainDrawer extends StatelessWidget {
   @override
@@ -25,7 +28,7 @@ class MainDrawer extends StatelessWidget {
               ),
               const SizedBox(width: 18),
               Text(
-                'Plz Induct',
+                'Plz Induct ;-;',
                 style: Theme.of(context)
                     .textTheme
                     .titleLarge!
@@ -46,7 +49,11 @@ class MainDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return const UserListScreen();
+            }));
+          },
         ),
         ListTile(
           leading: Icon(
@@ -60,8 +67,29 @@ class MainDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24),
           ),
-          onTap: () {},
+          onTap: () {
+            Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+              return const ResourcesListScreen();
+            }));
+          },
         ),
+        ListTile(
+            leading: Icon(
+              Icons.account_circle_rounded,
+              size: 26,
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            title: Text(
+              'About Me',
+              style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                  color: Theme.of(context).colorScheme.onBackground,
+                  fontSize: 24),
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(builder: (context) {
+                return AboutMe();
+              }));
+            }),
       ]),
     );
   }

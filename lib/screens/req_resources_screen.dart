@@ -4,6 +4,7 @@ import 'dart:convert';
 
 import 'package:swd_app/models/req_resource.dart';
 import 'package:swd_app/screens/no_netowrk.dart';
+import 'package:swd_app/widgets/main_drawer.dart';
 
 class ResourcesListScreen extends StatefulWidget {
   const ResourcesListScreen({super.key});
@@ -15,40 +16,47 @@ class ResourcesListScreen extends StatefulWidget {
 
 class _ResourcesListScreenState extends State<ResourcesListScreen> {
   List<ReqResource> reqRes = [];
-  Future<List<ReqResource>> fetchRes() async {
+
+  Future<List<ReqResource>> fetchResources() async {
     final response =
         await http.get(Uri.parse('https://reqres.in/api/unknown?page=1'));
-    final response2 =
+    final resopnse2 =
         await http.get(Uri.parse('https://reqres.in/api/unknown?page=2'));
-    var fetchedRes = json.decode(response.body);
-    var fetchedRes2 = json.decode(response2.body);
-    if (response.statusCode == 200 && response2.statusCode == 200) {
-      var data = [...fetchedRes['data'], ...fetchedRes2['data']];
-      for (Map i in data) {
-        ReqResource res = ReqResource(
-            id: i['id'],
-            name: i['name'],
-            year: i['year'],
-            color: i['color'],
-            pantoneValue: i['pantoneValue']);
-        reqRes.add(res);
+    if (response.statusCode == 200) {
+      final jsonData = json.decode(response.body);
+      final jsonData2 = json.decode(resopnse2.body);
+
+      final List<dynamic> resourceData = [
+        ...jsonData['data'],
+        ...jsonData2['data']
+      ];
+      for (var res in resourceData) {
+        ReqResource resource = ReqResource(
+            id: res['id'],
+            name: res['name'],
+            year: res['year'],
+            color: res['color'],
+            pantoneValue: res['pantone_value']);
+
+        reqRes.add(resource);
       }
       return reqRes;
     } else {
-      return reqRes;
+      throw Exception('Failed to fetch resources');
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MainDrawer(),
         appBar: AppBar(
-          title: const Text('Users'),
+          title: const Text('Resources'),
         ),
         body: Column(
           children: [
             Expanded(
-              child: FutureBuilder(
+              child: FutureBuilder<List<ReqResource>>(
                 builder: (context, AsyncSnapshot<List<ReqResource>> snapshot) {
                   return (snapshot.data == null)
                       ? const NoNetwork()
@@ -62,19 +70,17 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
                           itemBuilder: ((context, index) {
                             return ListTile(
                               visualDensity: const VisualDensity(vertical: 4),
-                              leading: CircleAvatar(
-                                maxRadius: 25,
-                                backgroundColor: Color(
-                                    '0x${snapshot.data![index].color.substring(1)}'
-                                        as int),
+                              title: Text(
+                                snapshot.data![index].name.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              title:
-                                  Text(snapshot.data![index].name.toString()),
-                              subtitle: Text('${snapshot.data![index].year}'),
+                              subtitle: Text(
+                                  'Year: ${snapshot.data![index].year}',
+                                  style: Theme.of(context).textTheme.bodyLarge),
                             );
                           }));
                 },
-                future: fetchRes(),
+                future: fetchResources(),
               ),
             ),
           ],

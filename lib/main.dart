@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:swd_app/screens/req_resources_screen.dart';
+import 'package:swd_app/screens/login_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swd_app/screens/user_list_screen.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -20,22 +19,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       darkTheme: ThemeData.dark().copyWith(
-        useMaterial3: true,
-        colorScheme: kDarkColorScheme,
-        cardTheme: const CardTheme().copyWith(
-          color: kDarkColorScheme.secondaryContainer,
-          margin: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 8,
+          useMaterial3: true,
+          colorScheme: kDarkColorScheme,
+          cardTheme: const CardTheme().copyWith(
+            color: kDarkColorScheme.secondaryContainer,
+            margin: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
+            ),
           ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: kDarkColorScheme.primaryContainer,
-            foregroundColor: kDarkColorScheme.onPrimaryContainer,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: kDarkColorScheme.primaryContainer,
+              foregroundColor: kDarkColorScheme.onPrimaryContainer,
+            ),
           ),
-        ),
-      ),
+          textTheme: GoogleFonts.latoTextTheme()
+              .copyWith(bodyLarge: const TextStyle(color: Colors.white))),
       theme: ThemeData().copyWith(
         useMaterial3: true,
         colorScheme: kColorScheme,
@@ -55,9 +55,10 @@ class MyApp extends StatelessWidget {
             backgroundColor: kColorScheme.primaryContainer,
           ),
         ),
-        textTheme: GoogleFonts.latoTextTheme(),
+        textTheme: GoogleFonts.latoTextTheme()
+            .copyWith(bodyLarge: const TextStyle(color: Colors.black)),
       ),
-      home: const UserListScreen(),
+      home: const LoginPage(),
     );
   }
 }

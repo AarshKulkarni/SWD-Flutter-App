@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:swd_app/models/req_user.dart';
 import 'package:swd_app/screens/no_netowrk.dart';
+import 'package:swd_app/widgets/main_drawer.dart';
 import 'package:swd_app/widgets/user_details.dart';
 
 class UserListScreen extends StatefulWidget {
@@ -48,6 +49,7 @@ class _UserListScreenState extends State<UserListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: MainDrawer(),
         appBar: AppBar(
           title: const Text('Users'),
         ),
@@ -82,7 +84,9 @@ class _UserListScreenState extends State<UserListScreen> {
                                     NetworkImage(snapshot.data![index].avatar),
                               ),
                               title: Text(
-                                  snapshot.data![index].first_name.toString()),
+                                snapshot.data![index].first_name.toString(),
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
                             );
                           }));
                 },
