@@ -6,9 +6,20 @@ class NoNetwork extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        'Hello Darkness my old Friend :(',
-        style: Theme.of(context).textTheme.headlineSmall,
+      child: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height / 3,
+          ),
+          Text(
+            'Hello Darkness my old Friend :(',
+            style: Theme.of(context).textTheme.headlineSmall,
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          const CircularProgressIndicator()
+        ],
       ),
     );
   }

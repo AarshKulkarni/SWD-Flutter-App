@@ -46,10 +46,15 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
     }
   }
 
+  int getColor(String s) {
+    var color = s.toUpperCase().replaceAll("#", "0xFF");
+    return int.parse(color);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: MainDrawer(),
+        drawer: const MainDrawer(),
         appBar: AppBar(
           title: const Text('Resources'),
         ),
@@ -74,9 +79,23 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
                                 snapshot.data![index].name.toString(),
                                 style: Theme.of(context).textTheme.bodyLarge,
                               ),
-                              subtitle: Text(
-                                  'Year: ${snapshot.data![index].year}',
-                                  style: Theme.of(context).textTheme.bodyLarge),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Year: ${snapshot.data![index].year}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Text(
+                                      'Pantone Value: ${snapshot.data![index].pantoneValue}',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                ],
+                              ),
                             );
                           }));
                 },
@@ -86,4 +105,8 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
           ],
         ));
   }
+  /*Color _getColor() {
+    var hex = resource.color.toUpperCase().replaceAll("#", "0xFF");
+    return Color(int.parse(hex));
+  }*/
 }

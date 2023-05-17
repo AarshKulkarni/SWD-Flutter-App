@@ -4,6 +4,8 @@ import 'package:swd_app/screens/req_resources_screen.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
 
 class MainDrawer extends StatelessWidget {
+  const MainDrawer({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -87,7 +89,7 @@ class MainDrawer extends StatelessWidget {
             ),
             onTap: () {
               Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                return AboutMe();
+                return const AboutMe();
               }));
             }),
       ]),

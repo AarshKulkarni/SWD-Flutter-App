@@ -27,9 +27,24 @@ class _LoginPageState extends State<LoginPage> {
         'password': passwordText.text
       }).then((value) {
         if (value.error != null) {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-            return const FailedLogin();
-          }));
+          showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  title: const Text('Login Failed'),
+                  content: Text(
+                    'Check password and email',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                  actions: [
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Ok'))
+                  ],
+                );
+              });
         } else {
           Navigator.of(context).push(MaterialPageRoute(builder: (context) {
             return const UserListScreen();
@@ -68,17 +83,19 @@ class _LoginPageState extends State<LoginPage> {
                   label: const Text('Password'),
                   hintText: hintPasswordText),
             ),
-            const SizedBox(height: 16,),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+            const SizedBox(
+              height: 16,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextButton(
                 child: const Text('Submit'),
                 onPressed: () {
                   _callLoginApi();
                 },
               ),
-              const SizedBox(width: 20,),
+              const SizedBox(
+                width: 20,
+              ),
               ElevatedButton(
                   onPressed: () {
                     _googleSignIn.signIn().then((googleSignInAccount) {

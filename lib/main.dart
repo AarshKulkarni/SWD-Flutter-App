@@ -34,8 +34,12 @@ class MyApp extends StatelessWidget {
               foregroundColor: kDarkColorScheme.onPrimaryContainer,
             ),
           ),
-          textTheme: GoogleFonts.latoTextTheme()
-              .copyWith(bodyLarge: const TextStyle(color: Colors.white))),
+          textTheme: GoogleFonts.latoTextTheme().copyWith(
+              bodyLarge: const TextStyle(color: Colors.white),
+              bodySmall: const TextStyle(color: Colors.white),
+              headlineSmall: const TextStyle(color: Colors.white),
+              titleLarge: const TextStyle(color: Colors.white),
+              labelLarge: const TextStyle(color: Colors.white))),
       theme: ThemeData().copyWith(
         useMaterial3: true,
         colorScheme: kColorScheme,
@@ -55,8 +59,12 @@ class MyApp extends StatelessWidget {
             backgroundColor: kColorScheme.primaryContainer,
           ),
         ),
-        textTheme: GoogleFonts.latoTextTheme()
-            .copyWith(bodyLarge: const TextStyle(color: Colors.black)),
+        textTheme: GoogleFonts.latoTextTheme().copyWith(
+            bodyLarge: const TextStyle(color: Colors.black),
+            bodySmall: const TextStyle(color: Colors.black),
+            headlineSmall: const TextStyle(color: Colors.black),
+            titleLarge: const TextStyle(color: Colors.black),
+            labelLarge: const TextStyle(color: Colors.black)),
       ),
       home: const LoginPage(),
     );

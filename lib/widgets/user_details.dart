@@ -14,6 +14,9 @@ class UserDetails extends StatelessWidget {
           Container(
             height: MediaQuery.of(context).size.height / 6.5,
             decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30)),
                 gradient: LinearGradient(
                     colors: [Colors.orange, Color.fromARGB(255, 226, 189, 79)],
                     begin: Alignment.topLeft,
