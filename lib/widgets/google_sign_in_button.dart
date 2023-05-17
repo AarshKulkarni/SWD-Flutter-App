@@ -21,7 +21,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           ? const CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
             )
-          : OutlinedButton(
+          : ElevatedButton(
               onPressed: () async {
                 setState(() {
                   _isSigningIn = true;
@@ -44,24 +44,8 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                   );
                 }
               },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(40),
-                  ),
-                ),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Text(
-                  'Sign in with Jewggle',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black54,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+              child: const Text(
+                'Sign in with Google',
               )),
     );
   }

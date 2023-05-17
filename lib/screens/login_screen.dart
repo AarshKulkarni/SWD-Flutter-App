@@ -89,32 +89,36 @@ class _LoginPageState extends State<LoginPage> {
             const SizedBox(
               height: 16,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              TextButton(
-                child: const Text('Submit'),
-                onPressed: () {
-                  _callLoginApi();
-                },
-              ),
-              const SizedBox(
-                width: 20,
-              ), //Remove future builder
-              FutureBuilder(
-                future: Authentication.initializeFirebase(context: context),
-                builder: (context, snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Error initializing Firebase');
-                  } else if (snapshot.connectionState == ConnectionState.done) {
-                    return const GoogleSignInButton();
-                  }
-                  return const CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(
-                      Colors.orange,
-                    ),
-                  );
-                },
-              ),
-            ]),
+            Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    child: const Text('Submit'),
+                    onPressed: () {
+                      _callLoginApi();
+                    },
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ), //Remove future builder
+                  FutureBuilder(
+                    future: Authentication.initializeFirebase(context: context),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return const Text('Error initializing Firebase');
+                      } else if (snapshot.connectionState ==
+                          ConnectionState.done) {
+                        return const GoogleSignInButton();
+                      }
+                      return const CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          Colors.orange,
+                        ),
+                      );
+                    },
+                  ),
+                ]),
           ]),
         ),
       ),

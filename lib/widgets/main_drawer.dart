@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:swd_app/authentication.dart';
 import 'package:swd_app/screens/about_me.dart';
+import 'package:swd_app/screens/login_screen.dart';
 import 'package:swd_app/screens/req_resources_screen.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
 
@@ -107,8 +109,12 @@ class MainDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24),
           ),
-          onTap: () {
+          onTap: () async {
             //Implement Logout
+            await Authentication.signOut(context: context);
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(builder: (context) => const LoginPage()),
+                (route) => false);
           },
         )
       ]),
