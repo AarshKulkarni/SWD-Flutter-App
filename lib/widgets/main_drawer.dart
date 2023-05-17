@@ -92,6 +92,25 @@ class MainDrawer extends StatelessWidget {
                 return const AboutMe();
               }));
             }),
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 2,
+        ),
+        ListTile(
+          leading: Icon(
+            Icons.logout_rounded,
+            size: 26,
+            color: Theme.of(context).colorScheme.onBackground,
+          ),
+          title: Text(
+            'LogOut',
+            style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                color: Theme.of(context).colorScheme.onBackground,
+                fontSize: 24),
+          ),
+          onTap: () {
+            //Implement Logout
+          },
+        )
       ]),
     );
   }

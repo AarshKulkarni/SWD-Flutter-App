@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -7,7 +9,7 @@ import 'package:swd_app/widgets/main_drawer.dart';
 import 'package:swd_app/widgets/user_details.dart';
 
 class UserListScreen extends StatefulWidget {
-  const UserListScreen({super.key});
+  const UserListScreen({User? user, super.key});
 
   @override
   State<StatefulWidget> createState() {

@@ -4,6 +4,9 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:swd_app/models/login_api_service.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
 
+import '../authentication.dart';
+import '../widgets/google_sign_in_button.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -14,7 +17,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+//  final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   final emailText = TextEditingController();
   final passwordText = TextEditingController();
@@ -95,24 +98,22 @@ class _LoginPageState extends State<LoginPage> {
               ),
               const SizedBox(
                 width: 20,
+              ), //Remove future builder
+              FutureBuilder(
+                future: Authentication.initializeFirebase(context: context),
+                builder: (context, snapshot) {
+                  if (snapshot.hasError) {
+                    return const Text('Error initializing Firebase');
+                  } else if (snapshot.connectionState == ConnectionState.done) {
+                    return const GoogleSignInButton();
+                  }
+                  return const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      Colors.orange,
+                    ),
+                  );
+                },
               ),
-              ElevatedButton(
-                  onPressed: () {
-                    _googleSignIn.signIn().then((googleSignInAccount) {
-                      if (googleSignInAccount != null) {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return const UserListScreen();
-                        }));
-                      } else {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(builder: (context) {
-                          return const FailedLogin();
-                        }));
-                      }
-                    });
-                  },
-                  child: const Text('Sign in with Google'))
             ]),
           ]),
         ),
