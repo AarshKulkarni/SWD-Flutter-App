@@ -43,7 +43,7 @@ class Authentication {
         idToken: googleSignInAuthentication.idToken,
       );
 
-      Future<User?> signInWithGoogle({required BuildContext context}) async {
+      Future<User?> loginWithGoogle({required BuildContext context}) async {
         FirebaseAuth auth = FirebaseAuth.instance;
         User? user;
 

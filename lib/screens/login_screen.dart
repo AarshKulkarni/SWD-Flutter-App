@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:swd_app/models/login_api_service.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
@@ -11,7 +10,7 @@ class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
   @override
-  State<StatefulWidget> createState() {
+  State<LoginPage> createState() {
     return _LoginPageState();
   }
 }
@@ -99,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                   const SizedBox(
                     width: 20,
-                  ), //Remove future builder
+                  ),
                   FutureBuilder(
                     future: Authentication.initializeFirebase(context: context),
                     builder: (context, snapshot) {
