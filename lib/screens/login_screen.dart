@@ -17,8 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-//  final GoogleSignIn _googleSignIn = GoogleSignIn();
-
   final emailText = TextEditingController();
   final passwordText = TextEditingController();
   String hintPasswordText = 'password';

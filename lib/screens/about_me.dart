@@ -11,6 +11,16 @@ class AboutMe extends StatelessWidget {
       appBar: AppBar(
         title: const Text('About Me'),
       ),
+      body: Center(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(
+            "Hello there! I am Aarsh Kulkarni from Hyderabad. I am an avid learner //..",
+            style: Theme.of(context).textTheme.bodyLarge,
+          )
+        ],
+      )),
     );
   }
 }

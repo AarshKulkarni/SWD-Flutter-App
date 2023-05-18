@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:swd_app/screens/login_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:swd_app/screens/login_screen.dart';
+import 'package:swd_app/services/notifications_service.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
@@ -8,16 +9,20 @@ var kDarkColorScheme = ColorScheme.fromSeed(
     seedColor: const Color.fromARGB(255, 5, 99, 125),
     brightness: Brightness.dark);
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationController().initializeLocalNotifications();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       darkTheme: ThemeData.dark().copyWith(
           useMaterial3: true,
           colorScheme: kDarkColorScheme,

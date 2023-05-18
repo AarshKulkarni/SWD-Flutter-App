@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:swd_app/models/req_resource.dart';
 import 'package:swd_app/screens/no_netowrk.dart';
 import 'package:swd_app/widgets/main_drawer.dart';
+import 'package:swd_app/widgets/req_res_details.dart';
 
 class ResourcesListScreen extends StatefulWidget {
   const ResourcesListScreen({super.key});
@@ -46,11 +47,6 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
     }
   }
 
-  int getColor(String s) {
-    var color = s.toUpperCase().replaceAll("#", "0xFF");
-    return int.parse(color);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,41 +59,18 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
             Expanded(
               child: FutureBuilder<List<ReqResource>>(
                 builder: (context, AsyncSnapshot<List<ReqResource>> snapshot) {
-                  return (snapshot.data == null)
-                      ? const NoNetwork()
-                      : ListView.separated(
-                          separatorBuilder: (context, index) {
-                            return const Divider(
-                              thickness: 2,
-                            );
-                          },
-                          itemCount: reqRes.length,
-                          itemBuilder: ((context, index) {
-                            return ListTile(
-                              visualDensity: const VisualDensity(vertical: 4),
-                              title: Text(
-                                snapshot.data![index].name.toString(),
-                                style: Theme.of(context).textTheme.bodyLarge,
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text('Year: ${snapshot.data![index].year}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Text(
-                                      'Pantone Value: ${snapshot.data![index].pantoneValue}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall),
-                                ],
-                              ),
-                            );
-                          }));
+                  return ListView.separated(
+                      separatorBuilder: (context, index) {
+                        return const Divider(
+                          thickness: 2,
+                        );
+                      },
+                      itemCount: reqRes.length,
+                      itemBuilder: ((context, index) {
+                        return (snapshot.data == null)
+                            ? const NoNetwork()
+                            : ResDetails(res: snapshot.data![index]);
+                      }));
                 },
                 future: fetchResources(),
               ),
@@ -105,8 +78,4 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
           ],
         ));
   }
-  /*Color _getColor() {
-    var hex = resource.color.toUpperCase().replaceAll("#", "0xFF");
-    return Color(int.parse(hex));
-  }*/
 }

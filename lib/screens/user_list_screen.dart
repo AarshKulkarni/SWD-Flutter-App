@@ -1,12 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+
 import 'package:swd_app/models/req_user.dart';
 import 'package:swd_app/screens/no_netowrk.dart';
 import 'package:swd_app/widgets/main_drawer.dart';
 import 'package:swd_app/widgets/user_details.dart';
+import 'package:swd_app/services/notifications_service.dart';
 
 class UserListScreen extends StatefulWidget {
   const UserListScreen({User? user, super.key});
@@ -78,6 +81,12 @@ class _UserListScreenState extends State<UserListScreen> {
                                       return UserDetails(
                                           user: snapshot.data![index]);
                                     });
+                              },
+                              onLongPress: () async {
+                                await NotificationController().showNotification(
+                                    title: 'User was clicked',
+                                    body:
+                                        '${snapshot.data![index].first_name} ${snapshot.data![index].last_name} was clicked');
                               },
                               visualDensity: const VisualDensity(vertical: 4),
                               leading: CircleAvatar(
