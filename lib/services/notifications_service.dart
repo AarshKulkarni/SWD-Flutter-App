@@ -37,7 +37,6 @@ class NotificationController {
   Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
     if (receivedAction.actionType == ActionType.SilentAction ||
         receivedAction.actionType == ActionType.SilentBackgroundAction) {
-      print('Message sent');
     } else {
       MyApp().navigatorKey.currentState?.pushAndRemoveUntil(
           MaterialPageRoute(builder: (_) => const UserListScreen()),

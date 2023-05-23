@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAqX6VjF2034Hc6xd62jVDbUDkK_bkB3a8',
-    appId: '1:59859830510:android:b060064718ce3165a2d5ff',
+    appId: '1:59859830510:android:63ad891f00e51f43a2d5ff',
     messagingSenderId: '59859830510',
     projectId: 'flutterfire-samples-23460',
     storageBucket: 'flutterfire-samples-23460.appspot.com',

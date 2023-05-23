@@ -2,100 +2,29 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:swd_app/screens/user_list_screen.dart';
 
 class Authentication {
-  static Future<FirebaseApp> initializeFirebase(
-      {required BuildContext context}) async {
+  Future<FirebaseApp> initializeFirebase() async {
     FirebaseApp firebaseApp = await Firebase.initializeApp();
-
-    // TODO: Add auto login logic
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => UserListScreen(
-            user: user,
-          ),
-        ),
-      );
-    }
-
     return firebaseApp;
   }
 
-  static Future<User?> signInWithGoogle({required BuildContext context}) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-    User? user;
+  static Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    final GoogleSignIn googleSignIn = GoogleSignIn();
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
 
-    final GoogleSignInAccount? googleSignInAccount =
-        await googleSignIn.signIn();
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-    if (googleSignInAccount != null) {
-      final GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
-
-      final AuthCredential credential = GoogleAuthProvider.credential(
-        accessToken: googleSignInAuthentication.accessToken,
-        idToken: googleSignInAuthentication.idToken,
-      );
-
-      Future<User?> loginWithGoogle({required BuildContext context}) async {
-        FirebaseAuth auth = FirebaseAuth.instance;
-        User? user;
-
-        final GoogleSignIn googleSignIn = GoogleSignIn();
-
-        final GoogleSignInAccount? googleSignInAccount =
-            await googleSignIn.signIn();
-
-        if (googleSignInAccount != null) {
-          final GoogleSignInAuthentication googleSignInAuthentication =
-              await googleSignInAccount.authentication;
-
-          final AuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleSignInAuthentication.accessToken,
-            idToken: googleSignInAuthentication.idToken,
-          );
-
-          try {
-            final UserCredential userCredential =
-                await auth.signInWithCredential(credential);
-
-            user = userCredential.user;
-          } on FirebaseAuthException catch (e) {
-            if (e.code == 'account-exists-with-different-credential') {
-              ScaffoldMessenger.of(context).showSnackBar(
-                Authentication.customSnackBar(
-                  content:
-                      'The account already exists with a different credential',
-                ),
-              );
-            } else if (e.code == 'invalid-credential') {
-              ScaffoldMessenger.of(context).showSnackBar(
-                Authentication.customSnackBar(
-                  content:
-                      'Error occurred while accessing credentials. Try again.',
-                ),
-              );
-            }
-          } catch (e) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              Authentication.customSnackBar(
-                content: 'Error occurred using Google Sign In. Try again.',
-              ),
-            );
-          }
-        }
-
-        return user;
-      }
-    }
-
-    return user;
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   static Future<void> signOut({required BuildContext context}) async {

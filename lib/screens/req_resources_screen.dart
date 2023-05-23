@@ -59,18 +59,18 @@ class _ResourcesListScreenState extends State<ResourcesListScreen> {
             Expanded(
               child: FutureBuilder<List<ReqResource>>(
                 builder: (context, AsyncSnapshot<List<ReqResource>> snapshot) {
-                  return ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return const Divider(
-                          thickness: 2,
-                        );
-                      },
-                      itemCount: reqRes.length,
-                      itemBuilder: ((context, index) {
-                        return (snapshot.data == null)
-                            ? const NoNetwork()
-                            : ResDetails(res: snapshot.data![index]);
-                      }));
+                  return (snapshot.data == null)
+                      ? const NoNetwork()
+                      : ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return const Divider(
+                              thickness: 2,
+                            );
+                          },
+                          itemCount: reqRes.length,
+                          itemBuilder: ((context, index) {
+                            return ResDetails(res: snapshot.data![index]);
+                          }));
                 },
                 future: fetchResources(),
               ),

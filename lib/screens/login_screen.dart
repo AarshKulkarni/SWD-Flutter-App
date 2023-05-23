@@ -1,10 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:swd_app/models/login_api_service.dart';
 import 'package:swd_app/screens/user_list_screen.dart';
-
-import '../authentication.dart';
-import '../widgets/google_sign_in_button.dart';
+import 'package:swd_app/widgets/google_sign_in_screen.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -56,70 +55,62 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(12),
-        child: Form(
-          child: Column(children: [
-            TextFormField(
-              keyboardType: TextInputType.emailAddress,
-              controller: emailText,
-              decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  label: Text('Email'),
-                  hintText: 'Enter your email'),
+    return (FirebaseAuth.instance.currentUser != null)
+        ? const UserListScreen()
+        : Scaffold(
+            appBar: AppBar(
+              title: const Text('Login'),
             ),
-            const SizedBox(
-              height: 16,
-            ),
-            TextFormField(
-              obscureText: true,
-              controller: passwordText,
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  label: const Text('Password'),
-                  hintText: hintPasswordText),
-            ),
-            const SizedBox(
-              height: 16,
-            ),
-            Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    child: const Text('Submit'),
-                    onPressed: () {
-                      _callLoginApi();
-                    },
+            body: Padding(
+              padding: const EdgeInsets.all(12),
+              child: Form(
+                child: Column(children: [
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: emailText,
+                    decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        label: Text('Email'),
+                        hintText: 'Enter your email'),
                   ),
                   const SizedBox(
-                    width: 20,
+                    height: 16,
                   ),
-                  FutureBuilder(
-                    future: Authentication.initializeFirebase(context: context),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasError) {
-                        return const Text('Error initializing Firebase');
-                      } else if (snapshot.connectionState ==
-                          ConnectionState.done) {
-                        return const GoogleSignInButton();
-                      }
-                      return const CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          Colors.orange,
+                  TextFormField(
+                    obscureText: true,
+                    controller: passwordText,
+                    decoration: InputDecoration(
+                        border: InputBorder.none,
+                        label: const Text('Password'),
+                        hintText: hintPasswordText),
+                  ),
+                  const SizedBox(
+                    height: 16,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
+                          child: const Text('Submit'),
+                          onPressed: () {
+                            _callLoginApi();
+                          },
                         ),
-                      );
-                    },
-                  ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: ((context) => const GoogleLogin())));
+                            },
+                            child: const Text('Sign in with Google'))
+                      ]),
                 ]),
-          ]),
-        ),
-      ),
-    );
+              ),
+            ),
+          );
   }
 }
 

@@ -1,31 +1,20 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:swd_app/screens/login_screen.dart';
-import 'package:swd_app/services/notifications_service.dart';
+import 'package:swd_app/screens/user_list_screen.dart';
 
-var kColorScheme =
-    ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 96, 59, 181));
-var kDarkColorScheme = ColorScheme.fromSeed(
-    seedColor: const Color.fromARGB(255, 5, 99, 125),
-    brightness: Brightness.dark);
+import '../main.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
-  await NotificationController().initializeLocalNotifications();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  MyApp({super.key});
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+class GoogleLogin extends StatelessWidget {
+  const GoogleLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final providers = [EmailAuthProvider()];
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
       darkTheme: ThemeData.dark().copyWith(
           useMaterial3: true,
           colorScheme: kDarkColorScheme,
@@ -74,7 +63,23 @@ class MyApp extends StatelessWidget {
             titleLarge: const TextStyle(color: Colors.black),
             labelLarge: const TextStyle(color: Colors.black)),
       ),
-      home: const LoginPage(),
+      initialRoute:
+          FirebaseAuth.instance.currentUser == null ? '/sign-in' : '/profile',
+      routes: {
+        '/sign-in': (context) {
+          return SignInScreen(
+            providers: providers,
+            actions: [
+              AuthStateChangeAction<SignedIn>((context, state) {
+                Navigator.pushReplacementNamed(context, '/profile');
+              }),
+            ],
+          );
+        },
+        '/profile': (context) {
+          return const UserListScreen();
+        },
+      },
     );
   }
 }

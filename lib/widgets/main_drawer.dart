@@ -109,9 +109,9 @@ class MainDrawer extends StatelessWidget {
                 color: Theme.of(context).colorScheme.onBackground,
                 fontSize: 24),
           ),
-          onTap: () async {
-            //Implement Logout
-            await Authentication.signOut(context: context);
+          onTap: () {
+            Authentication.signOut(context: context);
+            Authentication.signOut(context: context);
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(builder: (context) => const LoginPage()),
                 (route) => false);

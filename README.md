@@ -1,16 +1,13 @@
 # swd_app
 
-A new Flutter project.
+App project for SWD Inductions
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Features Implemented
+- Fetches and displays user data from [Reqres](https://reqres.in/api/users).
+- Fetches and displays resources data from [Reqres](https://reqres.in/unknown).
+- Implements signIn/signOut from the above API.
+- Implemented notifications when a user tile is long-pressed. 
+- App has the option signIn/signOut using any email provider.
+- Used Firebase as backend for storing user data.
+- Using Sign In With Google option persists login data.
+- Light and Dark Mode theme implemented.
