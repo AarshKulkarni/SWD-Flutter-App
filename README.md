@@ -3,6 +3,7 @@
 App project for SWD Inductions
 
 ## Features Implemented
+
 - Fetches and displays user data from [Reqres](https://reqres.in/api/users).
 - Fetches and displays resources data from [Reqres](https://reqres.in/unknown).
 - Implements signIn/signOut from the above API.
